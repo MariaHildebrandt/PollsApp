@@ -25,18 +25,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 @Configuration
-@EnableWebSecurity // primary spring security annotation that is used to enable web security in a project.
-@EnableGlobalMethodSecurity( // method level security based on annotations
-        securedEnabled = true, //protect your controller/service methods
+@EnableWebSecurity
+// primary spring security annotation -  enable web security in a project.
+@EnableGlobalMethodSecurity(
+        // method level security based on annotations
+        securedEnabled = true, //protect your controller/service methods @Secured(...)
         jsr250Enabled  = true, //enables the @RolesAllowed("ROLE_ADMIN")
         prePostEnabled = true // control syntax with @PreAuthorize and @PostAuthorize annotations
 )
-public class SecurityConfig extends WebSecurityConfigurerAdapter{ //implements Spring Security’s WebSecurityConfigurer interface +  allows other classes to extend it
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
+    //implements Spring Security’s WebSecurityConfigurer interface +  allows other classes to extend it
     @Autowired
-    CustomUserDetailsService customUserDetailsService; // loads a user based on username +loadUserByUsername() method returns a UserDetails object: authentication and role based validations
+    CustomUserDetailsService customUserDetailsService;
+    // loads a user based on username +loadUserByUsername() method
+    // returns a UserDetails object: authentication and role based validations
 
     @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler; //return a 401 unauthorized error // implements Spring Security’s AuthenticationEntryPoint interface
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    //return a 401 unauthorized error
+    // implements Spring Security’s AuthenticationEntryPoint interface
 
     //reads JWT authentication token
     //loads details for Token
@@ -47,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ //implements S
     }
 
     //build in-memory authentication
-    //AuthenticationManagerBuilder is used to create an AuthenticationManager instance which is the main Spring Security interface for authenticating a user
+    //AuthenticationManagerBuilder is used to create an AuthenticationManager instance
+    // which is the main Spring Security interface for authenticating a user
     @Override
     public void configure(AuthenticationManagerBuilder  authenticationMagerBuilder) throws Exception{
         authenticationMagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
@@ -66,7 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{ //implements S
     }
 
     //configure security functionalities like csrf, sessionManagement + rules to protect resources based on various conditions
-    //In our example, we’re permitting access to static resources and few other public APIs to everyone and restricting access to other APIs to authenticated users only
+    //In our example, we’re permitting access to static resources and few other public APIs to everyone
+    // and restricting access to other APIs to authenticated users only
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

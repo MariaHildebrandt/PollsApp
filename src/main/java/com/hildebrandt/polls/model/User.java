@@ -27,6 +27,7 @@ import java.util.Set;
 })
 
 public class User extends DateAudit {
+    //The DateAudit class will have createdAt and updatedAt fields that will be used for auditing purposes.
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

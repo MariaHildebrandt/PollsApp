@@ -16,13 +16,15 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
     @Override
+    //This method is called whenever an exception is thrown due
+    // to an unauthenticated user trying to access a resource that requires authentication.
     public void commence(HttpServletRequest httpServletRequest,
                          HttpServletResponse httpServletResponse,
                          AuthenticationException e) throws IOException, ServletException {
         logger.error("Responding with unauthorized error. Message - {}", e.getMessage());
         httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED,
                 "Sorry, You're not authorized to access this resource.");
-
+        // respond with a 401 error
     }
 
 }

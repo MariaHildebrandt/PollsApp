@@ -12,6 +12,7 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    //We’ll have a fixed set of pre-defined roles. So it makes sense to make the role name as enum.
     @NaturalId
     @Column(length = 60)
     private RoleName name;
